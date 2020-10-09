@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import com.zinc.gaocyui.CustomViewActivity;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     @Override
@@ -22,6 +24,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.tv_code8_canvas_clip).setOnClickListener(this);
         findViewById(R.id.tv_code8_canvas_draw).setOnClickListener(this);
         findViewById(R.id.tv_code8_canvas_text).setOnClickListener(this);
+        findViewById(R.id.tv_jump).setOnClickListener(this);
     }
 
     @Override
@@ -56,6 +59,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.tv_code8_canvas_text:
                 startActivity(new Intent(this, com.zinc.code8_canvas_text_paint.ClientActivity.class));
+                break;
+            case R.id.tv_jump:
+                startActivity(new Intent(this, CustomViewActivity.class));
                 break;
         }
     }

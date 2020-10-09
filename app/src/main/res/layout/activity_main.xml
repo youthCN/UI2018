@@ -62,7 +62,10 @@
                 android:id="@+id/tv_code8_canvas_text"
                 style="@style/textview_button"
                 android:text="8-3、canvas的书法家" />
-
+            <TextView
+                android:id="@+id/tv_jump"
+                style="@style/textview_button"
+                android:text="自定义页面" />
         </LinearLayout>
 
     </ScrollView>
