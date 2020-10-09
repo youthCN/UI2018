@@ -1,11 +1,13 @@
 package com.zinc.gaocyui;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.view.View;
 
 public class Chapter1View extends View {
@@ -32,8 +34,13 @@ public class Chapter1View extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        canvas.drawColor(Color.parseColor("#ff994400"));
+        canvas.drawColor(Color.parseColor("#ff004444"));
         super.onDraw(canvas);
+        canvas.drawCircle(dpToPx(25.0f),dpToPx(25.0f),dpToPx(25.0f),paint);
+    }
 
+    protected float dpToPx(float dpValue) {
+        DisplayMetrics metrics = Resources.getSystem().getDisplayMetrics();
+        return  (dpValue * metrics.density + 0.5f);
     }
 }
