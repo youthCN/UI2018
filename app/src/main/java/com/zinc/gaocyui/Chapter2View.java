@@ -4,10 +4,14 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.LinearGradient;
 import android.graphics.Paint;
-import android.graphics.Path;
+import android.graphics.RadialGradient;
+import android.graphics.Shader;
+import android.graphics.SweepGradient;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
@@ -16,24 +20,23 @@ import android.view.View;
 
 import com.zinc.ui2018.R;
 
-public class Chapter1View extends View {
+public class Chapter2View extends View {
     private Paint paint;
     private Paint borderPaint;
-    private Path p1;
 
     private int width;
     private int height;
-    public static final String TAG = Chapter1View.class.getSimpleName();
+    public static final String TAG = Chapter2View.class.getSimpleName();
 
-    public Chapter1View(Context context) {
+    public Chapter2View(Context context) {
         this(context, null);
     }
 
-    public Chapter1View(Context context, @Nullable AttributeSet attrs) {
+    public Chapter2View(Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public Chapter1View(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public Chapter2View(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
@@ -43,17 +46,14 @@ public class Chapter1View extends View {
         borderPaint = new Paint();
         paint.setAntiAlias(true);//设置抗锯齿
         paint.setColor(Color.parseColor("#ff990000"));
-        paint.setStyle(Paint.Style.STROKE);//Style 修改为画线模式
+        paint.setStyle(Paint.Style.FILL);//Style 修改为画线模式
         paint.setStrokeWidth(dpToPx(4));//设置线条宽度
-//        paint.setStyle(Paint.Style.FILL);//Style 修改为填充，默认
-//        paint.setStyle(Paint.Style.FILL_AND_STROKE);//Style 修改为填充
 
         borderPaint.setAntiAlias(true);//设置抗锯齿
         borderPaint.setColor(Color.parseColor("#ffffffff"));
         borderPaint.setStyle(Paint.Style.STROKE);//Style 修改为画线模式
         borderPaint.setStrokeWidth(dpToPx(4));//设置线条宽度
 
-        p1 = new Path();
     }
 
     @Override
@@ -89,46 +89,34 @@ public class Chapter1View extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        canvas.drawColor(Color.parseColor("#ff004444"));
         super.onDraw(canvas);
-//        canvas.drawCircle(width / 2, height / 2, width / 2, paint);//画圆
+        Shader shader0 = new LinearGradient(0, 0, width, height, Color.parseColor("#ffff0000"),
+                Color.parseColor("#ff00ff00"), Shader.TileMode.CLAMP);//从左上角渐变到右下角
+        Shader shader1 = new LinearGradient(width / 2, 0, width / 2, height, Color.parseColor("#ffff0000"),
+                Color.parseColor("#ff00ff00"), Shader.TileMode.CLAMP);//从上到下渐变到右下角
 
-//        canvas.drawRect(10, 10, width -10,height -10, paint);//画矩形
+        Shader shader2 = new RadialGradient(width / 2, height / 2, width / 4, Color.parseColor("#ffff0000"),
+                Color.parseColor("#ff00ff00"), Shader.TileMode.CLAMP);
+        Shader shader21 = new RadialGradient(width / 2, height / 2, width / 4, Color.parseColor("#ffff0000"),
+                Color.parseColor("#ff00ff00"), Shader.TileMode.MIRROR);
+        Shader shader22 = new RadialGradient(width / 2, height / 2, width / 4, Color.parseColor("#ffff0000"),
+                Color.parseColor("#ff00ff00"), Shader.TileMode.REPEAT);
 
-//        canvas.drawRoundRect(10.0f, 10.0f, (float)(width -10),(float)(height -10), 50.0f,50.0f,paint);//画矩形
-
-//        paint.setStyle(Paint.Style.STROKE);
-//        canvas.drawArc(10.0f, 10.0f, (float)(width -10),(float)(height -10), 20,140,true,paint);
-//        canvas.drawArc(10.0f, 10.0f, (float)(width -10),(float)(height -10), -110, 100,false,paint);
-
-//        paint.setStyle(Paint.Style.FILL);
-//        canvas.drawArc(10.0f, 10.0f, (float)(width -10),(float)(height -10), -110, 100,false,paint);
+        Shader shader3 = new SweepGradient(width / 2, height / 2, Color.parseColor("#ffff0000"),
+                Color.parseColor("#ff00ff00"));
 
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.flight);
-        canvas.drawBitmap(bitmap,0,0,paint);
-
-//        paint.setTextSize(dpToPx(10));
-//        canvas.drawText("This is a flight",width/2,height/2,paint);
-
-        paint.setStyle(Paint.Style.FILL);
-        canvas.save();
-        rotate(canvas,paint,100,100);
-        rotate(canvas,paint,60,160);
-        canvas.restore();
-//
-        /*rotate(canvas,paint,60);
-        rotate(canvas,paint,80);
-        rotate(canvas,paint,120);*/
-
+        Shader shader4 = new BitmapShader(bitmap, Shader.TileMode.CLAMP,Shader.TileMode.CLAMP);
+//        paint.setShader(shader0);
+//        paint.setShader(shader1);
+//        paint.setShader(shader2);
+//        paint.setShader(shader21);
+//        paint.setShader(shader22);
+//        paint.setShader(shader3);
+        paint.setShader(shader4);
+        canvas.drawCircle(width / 2, height / 2, width / 2, paint);
     }
 
-    private void rotate(Canvas canvas,Paint paint,int degree,int rotateDegree){
-        canvas.rotate(-rotateDegree,width/2,height/2);
-        canvas.drawArc(10.0f, 10.0f, (float)(width -10),(float)(height -10), 0, degree,true,paint);
-        canvas.drawArc(10.0f, 10.0f, (float)(width -10),(float)(height -10), 0, degree,true,borderPaint);
-        canvas.rotate(rotateDegree,width/2,height/2);
-//        canvas.translate(0,10);
-    }
 
     protected float dpToPx(float dpValue) {
         DisplayMetrics metrics = Resources.getSystem().getDisplayMetrics();
