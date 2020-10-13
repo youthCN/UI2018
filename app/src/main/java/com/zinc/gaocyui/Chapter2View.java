@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.RadialGradient;
+import android.graphics.Rect;
 import android.graphics.Shader;
 import android.graphics.SweepGradient;
 import android.support.annotation.Nullable;
@@ -113,8 +114,20 @@ public class Chapter2View extends View {
 //        paint.setShader(shader21);
 //        paint.setShader(shader22);
 //        paint.setShader(shader3);
-        paint.setShader(shader4);
-        canvas.drawCircle(width / 2, height / 2, width / 2, paint);
+//        paint.setShader(shader4);
+//        canvas.drawCircle(width / 2, height / 2, width / 2, paint);
+
+        paint.setTextSize(dpToPx(15));
+        String text = "hello";
+        canvas.drawText(text,width / 2, height / 2,paint);
+        Rect rect = new Rect();
+        paint.getTextBounds(text,0,text.length(),rect);
+        float measureText = paint.measureText(text);
+
+        paint.setStyle(Paint.Style.STROKE);
+        float strokeWidth = paint.getStrokeWidth();
+        canvas.drawRect(width/2 +rect.left -strokeWidth,height/2 +rect.top -strokeWidth,width/2 +rect.right +strokeWidth,height/2 +rect.bottom +strokeWidth,paint);
+        Log.d(TAG, "onDraw: rect="+rect+", measureText="+measureText);
     }
 
 
